@@ -16,7 +16,7 @@ export class Product extends Model<Product>{
     name: string;
 
     @Column({
-        type: DataType.NUMBER,
+        type: DataType.DECIMAL(10,2),
         allowNull: false,
     })
     price: number;
@@ -30,6 +30,7 @@ export class Product extends Model<Product>{
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
+        unique: true,
     })
     cod: string;
 
@@ -41,14 +42,12 @@ export class Product extends Model<Product>{
 
     @Column({
         type: DataType.DATE,
-
         allowNull: false,
     })
     createdAt: string;
 
     @Column({
         type: DataType.DATE,
-
         allowNull: false,
     })
     updatedAt: string;
