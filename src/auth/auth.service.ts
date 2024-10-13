@@ -2,6 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
+import { Response } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -10,8 +11,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async login(loginDto: CreateAuthDto) {
-    console.log(loginDto);
+  async login(loginDto: CreateAuthDto, res: Response) {
     const user = await this.usersService.validateUser(
       loginDto.login,
       loginDto.password,
@@ -20,8 +20,14 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
     }
     const payload = { login: user.login, sub: user.id };
-    return {
-      access_token: this.jwtService.sign(payload),
-    };
+    const token = this.jwtService.sign(payload);
+
+    res.cookie('access_token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 60 * 60 * 1000,
+      sameSite: 'lax',
+    });
+    return res.status(200).send({});
   }
 }

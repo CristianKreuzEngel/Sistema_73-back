@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { config } from 'dotenv';
+import * as cookieParser from 'cookie-parser';
 
 config();
 
@@ -11,6 +12,7 @@ async function bootstrap() {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
   });
+  app.use(cookieParser());
   await app.listen(3000);
 }
 bootstrap();
