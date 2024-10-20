@@ -27,6 +27,7 @@ export class AuthService {
       secure: process.env.NODE_ENV === 'production',
       maxAge: 60 * 60 * 1000,
       sameSite: 'lax',
+      path: '/',
     });
     return res.status(200).send({});
   }
