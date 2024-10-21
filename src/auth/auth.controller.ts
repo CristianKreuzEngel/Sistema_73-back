@@ -18,7 +18,6 @@ export class AuthController {
     if (!token) {
       throw new UnauthorizedException('Token não fornecido');
     }
-
     try {
       jwt.verify(token, process.env.SECRET);
       return { valid: true };
