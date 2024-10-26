@@ -11,9 +11,10 @@ import { UsersProviders } from './users/entities/user.provider';
 import { ProductsModule } from './products/products.module';
 import { ProductProvider } from './products/entities/product.provider';
 import { CheckTokenMiddleware } from './middleware/checkToken.middleware';
+import { OrdersModule } from './orders/orders.module';
 
 @Module({
-  imports: [UsersModule, AuthModule, ProductsModule],
+  imports: [UsersModule, AuthModule, ProductsModule, OrdersModule],
   controllers: [],
   providers: [...databaseProviders, ...UsersProviders, ...ProductProvider],
 })
