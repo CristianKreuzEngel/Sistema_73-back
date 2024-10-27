@@ -40,13 +40,16 @@ export class ProductsController {
     @Body() createProductDto: CreateProductDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    console.log(createProductDto);
-    console.log(file);
     if (!file) {
       throw new Error('File upload failed');
     }
     createProductDto.image = file.filename;
-    return await this.productsService.create(createProductDto);
+    const resp = await this.productsService.create(createProductDto);
+    if (resp) {
+      return { msg: 'Success', data: resp };
+    } else {
+      return resp;
+    }
   }
 
   @Get('get-all')
