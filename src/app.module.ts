@@ -13,11 +13,25 @@ import { ProductProvider } from './products/entities/product.provider';
 import { CheckTokenMiddleware } from './middleware/checkToken.middleware';
 import { OrdersModule } from './orders/orders.module';
 import { ServicesModule } from './services/services.module';
+import { OrderProvider } from './orders/entities/order.provider';
+import { ServiceProvider } from './services/entities/service.provider';
 
 @Module({
-  imports: [UsersModule, AuthModule, ProductsModule, OrdersModule, ServicesModule],
+  imports: [
+    UsersModule,
+    AuthModule,
+    ProductsModule,
+    OrdersModule,
+    ServicesModule,
+  ],
   controllers: [],
-  providers: [...databaseProviders, ...UsersProviders, ...ProductProvider],
+  providers: [
+    ...databaseProviders,
+    ...UsersProviders,
+    ...ProductProvider,
+    ...OrderProvider,
+    ...ServiceProvider,
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): any {
