@@ -16,10 +16,13 @@ export class AuthService {
       loginDto.login,
       loginDto.password,
     );
+
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
     }
+
     const payload = { login: user.login, sub: user.id };
+
     const token = this.jwtService.sign(payload);
 
     res.cookie('access_token', token, {

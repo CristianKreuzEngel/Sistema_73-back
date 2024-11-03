@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
 import { Service } from './entities/service.entity';
@@ -9,6 +9,7 @@ export class ServicesService {
     @Inject('SERVICE_PROVIDER') private serviceRepository: typeof Service,
   ) {}
   async create(createServiceDto: CreateServiceDto) {
+    console.log('createServiceDto', createServiceDto);
     return this.serviceRepository.create(createServiceDto);
   }
 
@@ -20,11 +21,22 @@ export class ServicesService {
     return `This action returns a #${id} service`;
   }
 
-  update(id: number, updateServiceDto: UpdateServiceDto) {
-    return `This action updates a #${id} service`;
+  async update(id: number, updateServiceDto: UpdateServiceDto) {
+    const service: Service = await this.serviceRepository.findByPk(id);
+    if (!service) {
+      throw new NotFoundException('Service não encontrado');
+    }
+    return this.serviceRepository.update(updateServiceDto, { where: { id } });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} service`;
+  async remove(id: number) {
+    const service: Service = await this.serviceRepository.findByPk(id);
+    if (!service) {
+      throw new NotFoundException('Service não encontrado');
+    }
+    return await this.serviceRepository.update(
+      { isActive: false },
+      { where: { id } },
+    );
   }
 }

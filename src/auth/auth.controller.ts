@@ -20,6 +20,10 @@ export class AuthController {
   async login(@Body() loginDto: CreateAuthDto, @Res() res: Response) {
     return await this.authService.login(loginDto, res);
   }
+
+
+
+
   @Get('check-token')
   checkToken(@Req() req) {
     const token = req.cookies['access_token'];
