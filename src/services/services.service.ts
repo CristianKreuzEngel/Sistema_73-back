@@ -9,7 +9,6 @@ export class ServicesService {
     @Inject('SERVICE_PROVIDER') private serviceRepository: typeof Service,
   ) {}
   async create(createServiceDto: CreateServiceDto) {
-    console.log('createServiceDto', createServiceDto);
     return this.serviceRepository.create(createServiceDto);
   }
 

@@ -14,5 +14,6 @@ async function bootstrap() {
   });
   app.use(cookieParser());
   await app.listen(3000);
+  console.log('Server started on port 3000');
 }
 bootstrap();

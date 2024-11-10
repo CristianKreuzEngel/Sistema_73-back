@@ -15,6 +15,11 @@ import { OrdersModule } from './orders/orders.module';
 import { ServicesModule } from './services/services.module';
 import { OrderProvider } from './orders/entities/order.provider';
 import { ServiceProvider } from './services/entities/service.provider';
+import { CustomersModule } from './customers/customers.module';
+import { RequestsModule } from './requests/requests.module';
+import { CustomerProvider } from './customers/entities/customer.provider';
+import { RequestProvider } from './requests/entities/request.provider';
+import { RequestXproductsModule } from './request-xproducts/request-xproducts.module';
 
 @Module({
   imports: [
@@ -23,6 +28,9 @@ import { ServiceProvider } from './services/entities/service.provider';
     ProductsModule,
     OrdersModule,
     ServicesModule,
+    CustomersModule,
+    RequestsModule,
+    RequestXproductsModule,
   ],
   controllers: [],
   providers: [
@@ -31,6 +39,8 @@ import { ServiceProvider } from './services/entities/service.provider';
     ...ProductProvider,
     ...OrderProvider,
     ...ServiceProvider,
+    ...CustomerProvider,
+    ...RequestProvider,
   ],
 })
 export class AppModule implements NestModule {
