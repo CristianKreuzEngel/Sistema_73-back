@@ -21,9 +21,6 @@ export class AuthController {
     return await this.authService.login(loginDto, res);
   }
 
-
-
-
   @Get('check-token')
   checkToken(@Req() req) {
     const token = req.cookies['access_token'];
@@ -37,5 +34,11 @@ export class AuthController {
       console.error(error);
       throw new UnauthorizedException('Token inválido ou expirado');
     }
+  }
+
+  @Post('logout')
+  logout(@Res() res: Response) {
+    res.clearCookie('access_token');
+    return res.status(200).json({ message: 'Logout realizado com sucesso' });
   }
 }
