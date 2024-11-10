@@ -21,6 +21,7 @@ export class Order extends Model<Order> {
     allowNull: false,
   })
   name: string;
+
   @Column({
     type: DataType.STRING(15),
     allowNull: false,
@@ -30,7 +31,6 @@ export class Order extends Model<Order> {
   @ForeignKey(() => Service)
   @Column({
     type: DataType.INTEGER,
-    allowNull: false,
   })
   idService;
 
@@ -59,7 +59,6 @@ export class Order extends Model<Order> {
 
   @Column({
     type: DataType.DECIMAL(10, 2),
-    allowNull: false,
   })
   totalValue: number;
 

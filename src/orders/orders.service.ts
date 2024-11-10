@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { Order } from './entities/order.entity';
@@ -8,23 +8,30 @@ export class OrdersService {
   constructor(
     @Inject('ORDER_REPOSITORY') private orderRepository: typeof Order,
   ) {}
-  create(createOrderDto: CreateOrderDto) {
-    return 'This action adds a new order';
+  async create(createOrderDto: CreateOrderDto) {
+    return await this.orderRepository.create(createOrderDto);
   }
 
   async findAll() {
-    return await this.orderRepository.findAll();
+    return await this.orderRepository.findAll({ where: { isActive: true } });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} order`;
+  async update(id: number, updateOrderDto: UpdateOrderDto) {
+    const order = await this.orderRepository.findByPk(id);
+    if (!order) {
+      throw new NotFoundException('Ordem não encontrada!');
+    }
+    return await this.orderRepository.update(updateOrderDto, { where: { id } });
   }
 
-  update(id: number, updateOrderDto: UpdateOrderDto) {
-    return `This action updates a #${id} order`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} order`;
+  async remove(id: number) {
+    const order = await this.orderRepository.findByPk(id);
+    if (!order) {
+      throw new NotFoundException('Ordem não encontrada!');
+    }
+    return await this.orderRepository.update(
+      { isActive: false },
+      { where: { id } },
+    );
   }
 }
