@@ -71,6 +71,11 @@ export class Order extends Model<Order> {
     type: DataType.STRING(255),
   })
   mistake: string;
+  @Column({
+    type: DataType.STRING(255),
+    defaultValue: 'pendente',
+  })
+  status: string;
 
   @Column({
     type: DataType.BOOLEAN,

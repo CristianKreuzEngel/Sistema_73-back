@@ -9,6 +9,7 @@ export class OrdersService {
     @Inject('ORDER_REPOSITORY') private orderRepository: typeof Order,
   ) {}
   async create(createOrderDto: CreateOrderDto) {
+    console.log(createOrderDto);
     return await this.orderRepository.create(createOrderDto);
   }
 
